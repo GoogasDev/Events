@@ -16,6 +16,7 @@ import dev.pgm.events.ready.ReadySystem;
 import dev.pgm.events.team.ConfigTeamParser;
 import dev.pgm.events.team.DefaultTeamManager;
 import dev.pgm.events.team.TournamentTeamManager;
+import dev.pgm.events.team.YmlConfigTeamParser;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import tc.oc.pgm.api.PGM;
@@ -34,6 +35,7 @@ public class Tournament extends JavaPlugin {
   private TournamentManager tournamentManager;
 
   private static Tournament plugin;
+  private static ConfigTeamParser parser;
 
   @Override
   public void onEnable() {
@@ -42,7 +44,8 @@ public class Tournament extends JavaPlugin {
 
     teamManager = DefaultTeamManager.manager();
     tournamentManager = new TournamentManager();
-    ConfigTeamParser.getInstance(); // load teams now
+    // Load teams now
+    parser = new YmlConfigTeamParser();
 
     ReadyManager readyManager = new ReadyManagerImpl(new ReadySystem(), new ReadyParties());
     ReadyListener readyListener = new ReadyListener(readyManager);
@@ -80,6 +83,10 @@ public class Tournament extends JavaPlugin {
 
   public static Tournament get() {
     return plugin;
+  }
+
+  public static ConfigTeamParser getTeamParser() {
+    return parser;
   }
 
   private static class CommandModule extends AbstractModule {
