@@ -56,6 +56,12 @@ public interface PgmConfigTeamParser extends ConfigTeamParser {
     }
 
     @Override
+    public void reload() {
+      this.teams.clear();
+      this.getTeams();
+    }
+
+    @Override
     public List<TournamentTeam> getTeams() {
       if (teams.isEmpty()) {
         queryTeams();

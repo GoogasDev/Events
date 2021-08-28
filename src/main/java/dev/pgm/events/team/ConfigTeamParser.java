@@ -6,5 +6,7 @@ public interface ConfigTeamParser {
 
   TournamentTeam getTeam(String name);
 
-  List<TournamentTeam> getTeams();
+    void reload();
+
+    List<TournamentTeam> getTeams();
 }

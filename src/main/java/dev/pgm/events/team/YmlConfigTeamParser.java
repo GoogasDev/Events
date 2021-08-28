@@ -15,10 +15,7 @@ public class YmlConfigTeamParser implements ConfigTeamParser {
   private List<TournamentTeam> teams;
 
   public YmlConfigTeamParser() {
-    teams =
-        parseTournamentTeams(
-            new File(Tournament.get().getDataFolder(), "teams"),
-            new File(Tournament.get().getDataFolder(), "teams.yml"));
+    load();
   }
 
   private static List<TournamentTeam> parseTournamentTeams(File teamsFolder, File teamsFile) {
@@ -74,6 +71,17 @@ public class YmlConfigTeamParser implements ConfigTeamParser {
     for (TournamentTeam team : teams) if (team.getName().equalsIgnoreCase(name)) return team;
 
     return null;
+  }
+
+  private void load() {
+    teams = parseTournamentTeams(
+            new File(Tournament.get().getDataFolder(), "teams"),
+            new File(Tournament.get().getDataFolder(), "teams.yml"));
+  }
+
+  @Override
+  public void reload() {
+    teams.clear();
   }
 
   @Override

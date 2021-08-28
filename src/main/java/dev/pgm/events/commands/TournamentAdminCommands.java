@@ -30,6 +30,14 @@ public class TournamentAdminCommands {
     sender.sendMessage(ChatColor.GOLD + "Starting tournament.");
   }
 
+  @Command(aliases = "reload", desc = "Reload the teams", perms = "events.staff.reload")
+  public void reload(CommandSender sender) {
+    Bukkit.getScheduler().runTaskAsynchronously(Tournament.get(), () -> {
+      Tournament.getTeamParser().reload();
+      sender.sendMessage(ChatColor.GOLD + "Teams have been reloaded");
+    });
+  }
+
   @Command(aliases = "register", desc = "Register a team", usage = "<team>", perms = "events.staff")
   public void register(CommandSender sender, TournamentTeamManager teamManager, @Text String name) {
     TournamentTeam team = Tournament.getTeamParser().getTeam(name);
