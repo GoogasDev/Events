@@ -24,4 +24,8 @@ public class AppData {
   public static boolean autoUnready() {
     return Tournament.get().getConfig().getBoolean("auto-unready", false);
   }
+
+  public static boolean pgmTeams() {
+    return Tournament.get().getConfig().getBoolean("pgm-teams", false);
+  }
 }

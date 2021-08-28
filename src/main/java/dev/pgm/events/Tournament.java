@@ -4,6 +4,7 @@ import dev.pgm.events.commands.TournamentAdminCommands;
 import dev.pgm.events.commands.TournamentUserCommands;
 import dev.pgm.events.commands.VetoCommands;
 import dev.pgm.events.commands.providers.TournamentProvider;
+import dev.pgm.events.config.AppData;
 import dev.pgm.events.format.TournamentFormat;
 import dev.pgm.events.listeners.MatchLoadListener;
 import dev.pgm.events.listeners.PlayerJoinListen;
@@ -15,6 +16,7 @@ import dev.pgm.events.ready.ReadyParties;
 import dev.pgm.events.ready.ReadySystem;
 import dev.pgm.events.team.ConfigTeamParser;
 import dev.pgm.events.team.DefaultTeamManager;
+import dev.pgm.events.team.PgmConfigTeamParser;
 import dev.pgm.events.team.TournamentTeamManager;
 import dev.pgm.events.team.YmlConfigTeamParser;
 import org.bukkit.Bukkit;
@@ -45,7 +47,11 @@ public class Tournament extends JavaPlugin {
     teamManager = DefaultTeamManager.manager();
     tournamentManager = new TournamentManager();
     // Load teams now
-    parser = new YmlConfigTeamParser();
+    if (AppData.pgmTeams()) {
+      parser = PgmConfigTeamParser.load();
+      parser.getTeams();
+    }
+    if (parser == null) parser = new YmlConfigTeamParser();
 
     ReadyManager readyManager = new ReadyManagerImpl(new ReadySystem(), new ReadyParties());
     ReadyListener readyListener = new ReadyListener(readyManager);

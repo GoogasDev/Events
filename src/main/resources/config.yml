@@ -11,3 +11,6 @@ ready-reminders: true
 
 # unready if a team player leaves
 auto-unready: false
+
+# whether to use pgm datastore to get teams
+pgm-teams: false
